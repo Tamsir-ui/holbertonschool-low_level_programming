@@ -1,0 +1,86 @@
+#!/bin/bash
+
+##########################################
+##########################################
+# Global configuration of your Github profile on the machine (sandbox, PC...)
+# Replace YOUR_GITHUB_USERNAME and YOUR_GITHUB_EMAIL with your real informations ( keep the "  " )
+# git config --global user.name "Djibril"
+# git config --global user.email "djibriltamsirn@gmail.com"
+
+# Example of cloning a GITHUB repo with the TOKEN in the URL to avoid having to enter your credentials each time you do a git push
+# Replace YOUR_GITHUB_USERNAME, YOUR_PERSONAL_ACCESS_TOKEN, and REPO_URL with your real information.
+
+# Format: https://YOUR_GITHUB_USERNAME:YOUR_PERSONAL_ACCESS_TOKEN@REPO_URL
+# EXAMPLE:
+# git clone https://YOUR_GITHUB_USERNAME:YOUR_PERSONAL_ACCESS_TOKEN@github.com/OWNER/REPOSITORY.git
+
+##########################################
+##########################################
+# Betty Configuration
+cd $HOME
+git clone https://github.com/hs-hq/Betty.git
+cd Betty
+./install.sh
+touch betty
+
+cat > betty << 'EOF'
+#!/bin/bash
+# Simply a wrapper script to keep you from having to use betty-style
+# and betty-doc separately on every item.
+# Originally by Tim Britton (@wintermanc3r), multiargument added by
+# Larry Madeo (@hillmonkey)
+
+BIN_PATH="/usr/local/bin"
+BETTY_STYLE="betty-style"
+BETTY_DOC="betty-doc"
+
+if [ "$#" = "0" ]; then
+    echo "No arguments passed."
+    exit 1
+fi
+
+for argument in "$@" ; do
+    echo -e "\n========== $argument =========="
+    ${BIN_PATH}/${BETTY_STYLE} "$argument"
+    ${BIN_PATH}/${BETTY_DOC} "$argument"
+done
+EOF
+
+chmod a+x betty
+
+mv betty /bin/
+
+##########################################
+##########################################
+# EMACS configuration
+cd $HOME
+touch .emacs
+
+cat > .emacs << 'EOF'
+(setq c-default-style "bsd"
+      c-basic-offset 8
+      tab-width 8
+      indent-tabs-mode t)
+
+(require 'whitespace)
+(setq whitespace-style '(face empty lines-tail trailing))
+(global-whitespace-mode t)
+
+(setq column-number-mode t)
+EOF
+
+##########################################
+##########################################
+# VIM Configuration
+
+cd $HOME
+touch .vimrc
+
+cat > .vimrc << 'EOF'
+set tabstop=8 shiftwidth=8
+set autoindent
+set smartindent
+set cindent
+syntax enable
+set number
+EOF
