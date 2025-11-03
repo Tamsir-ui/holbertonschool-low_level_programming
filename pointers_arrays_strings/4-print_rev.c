@@ -8,8 +8,8 @@ void print_rev(char *s)
 
 {
 int len = 0;
- int i;
-  
+int i;
+
 while (s[len] != '\0')
 len++;
 
