@@ -1,4 +1,5 @@
 #include "main.h"
+#include "stdio.h"
 
 /**
  * error_exit - prints error message and exits
